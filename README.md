@@ -1,7 +1,7 @@
 # Object-To-API
 
 
-[![npm version](http://img.shields.io/npm/v/object-to-api.svg?style=flat)](https://npmjs.org/package/@npmsoluto/package-to-rest "View this project on npm")[![Actions Status](https://github.com/mishaled/object-to-api/workflows/CI/badge.svg)](https://github.com/mishaled/object-to-api/actions)
+[![npm version](http://img.shields.io/npm/v/object-to-api.svg?style=flat)](https://npmjs.org/package/@npmsoluto/package-to-rest "View this project on npm") [![Actions Status](https://github.com/mishaled/object-to-api/workflows/CI/badge.svg)](https://github.com/mishaled/object-to-api/actions)
 
 
 
