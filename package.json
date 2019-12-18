@@ -13,6 +13,7 @@
   },
   "author": "Michael Vaisberg",
   "license": "MIT",
+  "homepage": "https://github.com/mishaled/object-to-api",
   "dependencies": {
     "express": "^4.17.1"
   },
