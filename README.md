@@ -73,10 +73,6 @@ app.use('/', objectToApi(someApiObject, {swagger: swaggerSettings}));
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
 
-## Credits
-
-TODO: Write credits
-
 ## License
 
 MIT License
