@@ -1,5 +1,13 @@
 # Object-To-API
 
+
+[![npm version](http://img.shields.io/npm/v/object-to-api.svg?style=flat)](https://npmjs.org/package/@npmsoluto/package-to-rest "View this project on npm")
+
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mishaled/object-to-api/CI)
+
+![](https://github.com/actions/mishaled/object-to-api/workflows/CI/badge.svg)
+
+
 Do you happen to have a Javascript package that you want to wrap in a REST service?
 If so- this module is exactly for you!
 
