@@ -1,15 +1,20 @@
 # Object-To-API
 
+
+[![npm version](http://img.shields.io/npm/v/object-to-api.svg?style=flat)](https://npmjs.org/package/@npmsoluto/package-to-rest "View this project on npm") [![Actions Status](https://github.com/mishaled/object-to-api/workflows/CI/badge.svg)](https://github.com/mishaled/object-to-api/actions)
+
+
+
 Do you happen to have a Javascript package that you want to wrap in a REST service?
 If so- this module is exactly for you!
 
 ## Installation
-using npm
+Using npm
 ```bash
 npm install --save object-to-api
 ```
 
-using yarn
+Using yarn
 ```bash
 yarn add object-to-api
 ```
@@ -48,7 +53,7 @@ Swagger is peerDependency
 Swagger docs on http://localhost:3000/api-docs!
 
 ```bash
-npm install --save-dev swagger?
+npm install --save-dev swagger
 ```
 
 ```js
@@ -67,10 +72,6 @@ app.use('/', objectToApi(someApiObject, {swagger: swaggerSettings}));
 3. Commit your changes: `git commit -am 'Add some feature'`
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
-
-## Credits
-
-TODO: Write credits
 
 ## License
 
