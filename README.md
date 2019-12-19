@@ -9,12 +9,12 @@ Do you happen to have a Javascript package that you want to wrap in a REST servi
 If so- this module is exactly for you!
 
 ## Installation
-using npm
+Using npm
 ```bash
 npm install --save object-to-api
 ```
 
-using yarn
+Using yarn
 ```bash
 yarn add object-to-api
 ```
@@ -53,7 +53,7 @@ Swagger is peerDependency
 Swagger docs on http://localhost:3000/api-docs!
 
 ```bash
-npm install --save-dev swagger?
+npm install --save-dev swagger
 ```
 
 ```js
