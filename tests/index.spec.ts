@@ -6,6 +6,7 @@ import { Server } from 'http';
 import uuid from 'uuid';
 import objectToApi from '../src';
 import queryString from 'query-string';
+import { Method } from '../src/Options';
 
 chai.use(chaiHttp);
 chai.should();
@@ -186,13 +187,9 @@ describe('ObjectToApi', function() {
         });
     });
 
-    describe('No methods override', () => {
-        performChecksForMethod();
-    });
+    performChecksForMethod();
 
     describe('Method override exists', () => {
-        ['GET', 'POST', 'PUT', 'DELETE'].map((method: 'GET' | 'POST' | 'PUT' | 'DELETE') =>
-            performChecksForMethod(method)
-        );
+        ['GET', 'POST', 'PUT', 'DELETE'].map((method: Method) => performChecksForMethod(method));
     });
 });
