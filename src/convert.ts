@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import baseSwaggerJson from './swagger.json';
 import { JsonObject } from 'swagger-ui-express';
-import Options from './Options.js';
+import Options, { Method } from './Options.js';
+import queryString from 'query-string';
 
-const updateSwaggerJson = (pathSoFar: string, path: string, newSwaggerjson: JsonObject) => {
+const updateSwaggerJson = (pathSoFar: string, path: string, newSwaggerjson: JsonObject, method: Method) => {
     const newPath = `${pathSoFar && `/${pathSoFar}`}/${path}`;
     newSwaggerjson.paths[newPath] = {
-        post: {
+        [method.toLowerCase()]: {
             tags: [],
             summary: newPath,
             description: newPath,
@@ -29,13 +30,48 @@ const updateSwaggerJson = (pathSoFar: string, path: string, newSwaggerjson: Json
     };
 };
 
-const handleFunction = <T>(path: string, func: Function, obj: T, pathSoFar: string, newSwaggerjson: JsonObject) => {
+const handleFunction = <T>(
+    path: string,
+    func: Function,
+    obj: T,
+    pathSoFar: string,
+    newSwaggerjson: JsonObject,
+    methods: {}
+) => {
     const childRouter = Router();
 
-    childRouter.post(`/${path}`, async ({ body }, res) => res.send(await func.apply(obj, body)));
+    const currentMethod = methods[path];
+    switch (currentMethod) {
+        case 'GET': {
+            childRouter.get(`/${path}`, async (req, res) => {
+                res.send(await func.apply(obj, Object.values(req.query)));
+            });
+
+            break;
+        }
+        case 'PUT': {
+            childRouter.put(`/${path}`, async ({ body }, res) => {
+                res.send(await func.apply(obj, body));
+            });
+            break;
+        }
+        case 'DELETE': {
+            childRouter.delete(`/${path}`, async (req, res) => {
+                res.send(await func.apply(obj, Object.values(req.query)));
+            });
+
+            break;
+        }
+        default: {
+            childRouter.post(`/${path}`, async (req, res) => {
+                res.send(await func.apply(obj, req.body));
+            });
+            break;
+        }
+    }
 
     if (newSwaggerjson) {
-        updateSwaggerJson(pathSoFar, path, newSwaggerjson);
+        updateSwaggerJson(pathSoFar, path, newSwaggerjson, currentMethod || 'POST');
     }
 
     return childRouter;
@@ -43,7 +79,8 @@ const handleFunction = <T>(path: string, func: Function, obj: T, pathSoFar: stri
 
 const convert = <T extends object>(
     obj: T,
-    options?: Options,
+    options?: Options<T>,
+    methods?: {},
     path: string = '',
     pathSoFar: string = path,
     newSwaggerjson?: JsonObject
@@ -71,9 +108,9 @@ const convert = <T extends object>(
 
         let childRouter;
         if (typeof val === 'function') {
-            childRouter = handleFunction(key, val, obj, pathSoFar, newSwaggerjson);
+            childRouter = handleFunction(key, val, obj, pathSoFar, newSwaggerjson, methods);
         } else if (typeof val === 'object') {
-            [childRouter] = convert(val, options, key, pathSoFar + `/${key}`);
+            [childRouter] = convert(val, options, options.methods[key] || {}, key, pathSoFar + `/${key}`);
         }
 
         if (!childRouter) {
@@ -86,4 +123,5 @@ const convert = <T extends object>(
     return [papaRouter, newSwaggerjson];
 };
 
-export default <T extends object>(obj: T, options?: Options) => convert<T>(obj, options);
+export default <T extends object>(obj: T, options?: Options<T>) =>
+    convert<T>(obj, options, (options && options.methods) || {});
